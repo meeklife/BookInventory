@@ -1,0 +1,54 @@
+### User Logins
+POST http://127.0.0.1:8000/book/login
+Content-Type: application/json
+
+{"username":"Baah", "password":"Baah"}
+
+### Create a new user
+POST http://127.0.0.1:8000/book/signup
+Content-Type: application/json
+
+{"username":"Baah", "password":"Baah", "email":"baah@gmail.com"}
+
+###
+POST http://127.0.0.1:8000/book/test_token
+Content-Type: application/json
+{}
+
+### Listing all books in database page1
+GET http://127.0.0.1:8000/book/index/
+Content-Type: application/json
+
+### Listing all books in database page2
+GET http://127.0.0.1:8000/book/index/?page=2
+Content-Type: application/json
+
+### Creating a new book
+POST http://127.0.0.1:8000/book/api/create
+{
+	"title": " ",
+    "author": " ",
+    "genre": " ",
+    "date": " ",
+    "total_quantity": 5,
+    "aval_quantity": 5
+}
+
+### Deleting a book
+DELETE http://127.0.0.1:8000/book/api/delete/<id>
+
+### Viewing a book details
+GET http://127.0.0.1:8000/book/api/view/<id>
+
+### Updating a book details
+PATCH http://127.0.0.1:8000/book/api/update/<id>
+{
+	"title": " ",
+    "author": " ",
+    "date": " ",
+    "genre": " ",
+    "total_quantity": 5
+}
+
+### Checking out a book 
+GET http://127.0.0.1:8000/book/api/checkout/7
