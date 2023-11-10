@@ -2,13 +2,13 @@
 POST http://127.0.0.1:8000/book/login
 Content-Type: application/json
 
-[{"username":"Baah", "password":"Baah"}]
+[{"username":"Meek", "password":"Meek"}]
 
 ### Create a new user
 POST http://127.0.0.1:8000/book/signup
 Content-Type: application/json
 
-{"username":"Baah", "password":"Baah", "email":"baah@gmail.com"}
+{"username":"BaahYaw", "password":"Baah", "email":"baahYaw@gmail.com"}
 
 ###
 POST http://127.0.0.1:8000/book/test_token
@@ -25,14 +25,19 @@ Content-Type: application/json
 
 ### Creating a new book
 POST http://127.0.0.1:8000/book/api/create
+
+[
+"Basic Auth": {
+    "username":"Meek", "password":"Meek"
+ } ,
 {
-	"title": "The Law Book",
+	"title": "The Good Book",
     "author": "Augustine",
     "genre": "Law",
     "date": "2023",
     "total_quantity": 5,
     "aval_quantity": 5
-}
+}]
 
 ### Deleting a book
 DELETE http://127.0.0.1:8000/book/api/delete/<id>

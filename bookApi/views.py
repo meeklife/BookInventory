@@ -33,6 +33,7 @@ class BookListView(View):
 
 def checkOut(request, book_id):
     book = Books.objects.filter(id=book_id).first()
-    book.aval_quantity = book.total_quantity - 1
-    book.save()
-    return HttpResponse(book, content_type='application/json')
+    if book:
+        book.aval_quantity = book.total_quantity - 1
+        book.save()
+        return HttpResponse(book, content_type='application/json')
