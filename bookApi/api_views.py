@@ -2,16 +2,18 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Books
 from rest_framework.response import Response
 from .serializer import BookSerializer, UserSerializer
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 
-from rest_framework.authentication import SessionAuthentication, TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 
 @api_view(['POST'])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def create_book(request):
     if request.method == 'POST':
         data = request.data
@@ -24,6 +26,8 @@ def create_book(request):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication, SessionAuthentication, BasicAuthentication])
 def delete_book(request, book_id):
     book = Books.objects.filter(id=book_id).first()
     if book:
@@ -42,6 +46,8 @@ def view_book(request, book_id):
 
 
 @api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication, SessionAuthentication, BasicAuthentication])
 def update_book(request, book_id):
     book = Books.objects.filter(id=book_id).first()
     if book:

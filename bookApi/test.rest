@@ -2,7 +2,7 @@
 POST http://127.0.0.1:8000/book/login
 Content-Type: application/json
 
-{"username":"Baah", "password":"Baah"}
+[{"username":"Baah", "password":"Baah"}]
 
 ### Create a new user
 POST http://127.0.0.1:8000/book/signup
@@ -26,10 +26,10 @@ Content-Type: application/json
 ### Creating a new book
 POST http://127.0.0.1:8000/book/api/create
 {
-	"title": " ",
-    "author": " ",
-    "genre": " ",
-    "date": " ",
+	"title": "The Law Book",
+    "author": "Augustine",
+    "genre": "Law",
+    "date": "2023",
     "total_quantity": 5,
     "aval_quantity": 5
 }
@@ -38,7 +38,7 @@ POST http://127.0.0.1:8000/book/api/create
 DELETE http://127.0.0.1:8000/book/api/delete/<id>
 
 ### Viewing a book details
-GET http://127.0.0.1:8000/book/api/view/<id>
+GET http://127.0.0.1:8000/book/api/view/4
 
 ### Updating a book details
 PATCH http://127.0.0.1:8000/book/api/update/<id>
