@@ -13,7 +13,7 @@ from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponseBadReq
 
 class BookListView(View):
     def get(self, request, *args, **kwargs):
-        all_books = Books.objects.all()
+        all_books = Books.objects.get_queryset().order_by('id')
 
         page_num = request.GET.get('page', 1)
         paginator = Paginator(all_books, 6)

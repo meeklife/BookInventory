@@ -61,17 +61,6 @@ def update_book(request, book_id):
     else:
         return Response('Books not found', status=404)
 
-# Checking out a book
-
-
-# def checkOut(request, book_id):
-#     book = Books.objects.get(id=book_id)
-#     serializer = BookSerializer(book)
-#     if serializer.is_valid():
-#         book.aval_quantity = book.total_quantity - 1
-#         book.save()
-#         return Response(serializer.data)
-
 
 # Creating Users and User Authentication
 
