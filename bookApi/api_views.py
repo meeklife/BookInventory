@@ -10,6 +10,9 @@ from rest_framework import status
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
 
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
@@ -86,8 +89,3 @@ def signup(request):
         token, created = Token.objects.get_or_create(user=user)
         return Response({"token": token.key, "user": serializer.data})
     return Response(serializer.errors, status=400)
-
-
-@api_view(['POST'])
-def test_token(request):
-    return Response({})

@@ -1,7 +1,26 @@
 from django.urls import path, re_path
+from rest_framework import permissions
 from . import views
 from . import api_views
 from .views import BookListView
+
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Snippets API",
+        default_version='v1',
+        description="Test description",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="contact@snippets.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
 
 urlpatterns = [
     path('index/', BookListView.as_view(), name='home'),
@@ -11,6 +30,13 @@ urlpatterns = [
     path('api/update/<int:book_id>', api_views.update_book, name='update_book'),
     re_path('login', api_views.login),
     re_path('signup', api_views.signup),
-    re_path('test_token', api_views.test_token),
     path('api/checkout/<int:book_id>', views.checkOut, name='checkOut'),
+
+    path('swagger<format>/', schema_view.without_ui(cache_timeout=0),
+         name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger',
+         cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc',
+         cache_timeout=0), name='schema-redoc'),
+
 ]
