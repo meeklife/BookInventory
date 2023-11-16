@@ -10,10 +10,13 @@ from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponseBadReq
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+from drf_yasg.utils import swagger_auto_schema
 # Create your views here.
 
 
 class BookListView(View):
+
+    @swagger_auto_schema(method='GET')
     def get(self, request, *args, **kwargs):
         all_books = Books.objects.get_queryset().order_by('id')
 
