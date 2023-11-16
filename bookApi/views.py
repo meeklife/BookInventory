@@ -7,6 +7,8 @@ from django.core import serializers
 import json
 from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponseBadRequest, HttpResponseNotFound
 
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
 # Create your views here.
 

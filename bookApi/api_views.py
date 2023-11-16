@@ -46,6 +46,8 @@ def view_book(request, book_id):
     if book:
         serializer = BookSerializer(book)
         return Response(serializer.data)
+    else:
+        return Response('Book not found', status=404)
 
 
 @api_view(['PATCH'])
