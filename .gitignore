@@ -1,5 +1,5 @@
+fly.toml
 db.sqlite3
-.toml
+log.txt
+bookApi/test.rest
 Dockerfile
-.rest
-/log.txt
