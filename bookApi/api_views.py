@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Books
 from rest_framework.response import Response
 from .serializer import BookSerializer, UserSerializer, LoginSerializer
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 
-from rest_framework.authentication import SessionAuthentication, TokenAuthentication, BasicAuthentication
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from drf_yasg.utils import swagger_auto_schema
@@ -15,8 +15,6 @@ from drf_yasg.utils import swagger_auto_schema
 
 @swagger_auto_schema(method='POST', request_body=BookSerializer)
 @api_view(['POST'])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
 def create_book(request):
     if request.method == 'POST':
         data = request.data
@@ -26,6 +24,16 @@ def create_book(request):
             return Response(serializer.data, status=200)
         else:
             return Response(serializer.errors, status=400)
+
+
+@api_view(['DELETE'])
+def delete_book(request, book_id):
+    book = Books.objects.filter(id=book_id).first()
+    if book:
+        book.delete()
+        return Response(status=204)
+    else:
+        return Response("Book not found", status=404)
 
 
 @api_view(['GET'])
@@ -40,8 +48,6 @@ def view_book(request, book_id):
 
 @swagger_auto_schema(method='PATCH', request_body=BookSerializer)
 @api_view(['PATCH'])
-@permission_classes([IsAuthenticated])
-@authentication_classes([TokenAuthentication, SessionAuthentication, BasicAuthentication])
 def update_book(request, book_id):
     book = Books.objects.filter(id=book_id).first()
     if book:
@@ -56,24 +62,12 @@ def update_book(request, book_id):
         return Response('Books not found', status=404)
 
 
-@api_view(['DELETE'])
-@permission_classes([IsAuthenticated])
-@authentication_classes([TokenAuthentication, SessionAuthentication, BasicAuthentication])
-def delete_book(request, book_id):
-    book = Books.objects.filter(id=book_id).first()
-    if book:
-        book.delete()
-        return Response(status=204)
-    else:
-        return Response("Book not found", status=404)
-
-
 # Creating Users and User Authentication
 
 @swagger_auto_schema(method='POST', request_body=LoginSerializer)
 @api_view(['POST'])
 def login(request):
-    user = get_object_or_404(User, username=request.data["username"])
+    user = get_object_or_404(User, username=request.data['username'])
     if not user.check_password(request.data['password']):
         return Response("missing user", status=status.HTTP_404_NOT_FOUND)
     token, created = Token.objects.get_or_create(user=user)

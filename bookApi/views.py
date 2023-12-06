@@ -7,18 +7,13 @@ from django.core import serializers
 import json
 from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponseBadRequest, HttpResponseNotFound
 
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
 
-from drf_yasg.utils import swagger_auto_schema
 # Create your views here.
 
 
 class BookListView(View):
-
-    @swagger_auto_schema(method='GET')
     def get(self, request, *args, **kwargs):
-        all_books = Books.objects.get_queryset().order_by('id')
+        all_books = Books.objects.all()
 
         page_num = request.GET.get('page', 1)
         paginator = Paginator(all_books, 6)
@@ -38,7 +33,8 @@ class BookListView(View):
 
 def checkOut(request, book_id):
     book = Books.objects.filter(id=book_id).first()
-    if book:
-        book.aval_quantity = book.total_quantity - 1
-        book.save()
-        return HttpResponse(book, content_type='application/json')
+    book.aval_quantity = book.total_quantity - 1
+    book.save()
+    context = {'book': book}
+    # my_json = serializers.serialize('json', book)
+    return HttpResponse(context)

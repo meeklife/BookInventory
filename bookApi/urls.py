@@ -7,7 +7,6 @@ from .views import BookListView
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 
-
 schema_view = get_schema_view(
     openapi.Info(
         title="API Docs for Book Inventory",
@@ -21,9 +20,8 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-
 urlpatterns = [
-    path('index', BookListView.as_view(), name='home'),
+    path('index/', BookListView.as_view(), name='home'),
     path('api/create', api_views.create_book, name='create_book'),
     path('api/delete/<int:book_id>', api_views.delete_book, name='delete_book'),
     path('api/view/<int:book_id>', api_views.view_book, name='view_book'),
@@ -38,5 +36,4 @@ urlpatterns = [
          cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',
          cache_timeout=0), name='schema-redoc'),
-
 ]
