@@ -4,3 +4,4 @@ log.txt
 bookApi/test.rest
 Dockerfile
 .env
+.dockerignore
