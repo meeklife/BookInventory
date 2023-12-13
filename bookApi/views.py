@@ -3,17 +3,16 @@ from .models import Books
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from rest_framework.response import Response
+from .serializer import BookSerializer
 from django.core import serializers
 import json
 from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponseBadRequest, HttpResponseNotFound
 
 
-# Create your views here.
-
-
 class BookListView(View):
+
     def get(self, request, *args, **kwargs):
-        all_books = Books.objects.all()
+        all_books = Books.objects.get_queryset().order_by('id')
 
         page_num = request.GET.get('page', 1)
         paginator = Paginator(all_books, 6)
@@ -36,5 +35,4 @@ def checkOut(request, book_id):
     book.aval_quantity = book.total_quantity - 1
     book.save()
     context = {'book': book}
-    # my_json = serializers.serialize('json', book)
     return HttpResponse(context)
