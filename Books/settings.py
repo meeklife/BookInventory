@@ -37,8 +37,10 @@ DEBUG = os.environ.get("DEBUG") == True
 # "https://bookinventory-crimson-feather-8949.fly.dev", "localhost", "127.0.0.1"]
 # APP_NAME = os.environ.get("FLY_APP_NAME")
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'bookinventory.fly.dev']
+
 CSRF_TRUSTED_ORIGINS = ['https://bookinventory.fly.dev']
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -61,9 +63,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -71,8 +73,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Books.urls'
-
-CORS_ALLOW_ALL_ORIGINS = True
 
 TEMPLATES = [
     {
@@ -163,16 +163,16 @@ REST_FRAMEWORK = {
 }
 
 SWAGGER_SETTINGS = {
+    "USE_SESSION_AUTH": False,
+    "VALIDATOR_URL": None,
     'SECURITY_DEFINITIONS': {
-        'Basic': {
-            'type': 'basic'
+        "api_key": {
+            "type": "apikey",
+            "name": "Authorization",
+            "in": "header",
         },
-        'Bearer': {
-            'type': 'apiKey',
-            'name': 'Authorization',
-            'in': 'header'
-        }
-    }
+    },
+    "REFETCH_SCHEMA_WITH_AUTH": True,
 }
 
 REDOC_SETTINGS = {
