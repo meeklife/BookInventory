@@ -14,7 +14,9 @@ import os
 import dotenv
 import dj_database_url
 # import environ
+# import registry
 
+# from registry import swagger_generator.schemes
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -174,6 +176,10 @@ SWAGGER_SETTINGS = {
     },
     "REFETCH_SCHEMA_WITH_AUTH": True,
 }
+
+# registry.swagger_generator.schemes = ('http', 'https')
+# USE_X_FORWARDED_HOST = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 REDOC_SETTINGS = {
     'LAZY_RENDERING': False,
