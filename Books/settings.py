@@ -104,6 +104,8 @@ DATABASES = {
     )
 }
 
+# Database for local environment
+# Switch to this in local environment
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -160,7 +162,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
     ),
 }
 
@@ -176,10 +177,6 @@ SWAGGER_SETTINGS = {
     },
     "REFETCH_SCHEMA_WITH_AUTH": True,
 }
-
-# registry.swagger_generator.schemes = ('http', 'https')
-# USE_X_FORWARDED_HOST = True
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 REDOC_SETTINGS = {
     'LAZY_RENDERING': False,
