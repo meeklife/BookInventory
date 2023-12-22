@@ -13,15 +13,11 @@ import os
 
 import dotenv
 import dj_database_url
-# import environ
-# import registry
 
-# from registry import swagger_generator.schemes
 from dotenv import load_dotenv
 from pathlib import Path
 
 load_dotenv()
-# env = environ.Env()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,8 +32,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG") == True
 
-# "https://bookinventory-crimson-feather-8949.fly.dev", "localhost", "127.0.0.1"]
-# APP_NAME = os.environ.get("FLY_APP_NAME")
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'bookinventory.fly.dev']
 
 CSRF_TRUSTED_ORIGINS = ['https://bookinventory.fly.dev']
