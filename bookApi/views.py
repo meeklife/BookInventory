@@ -27,14 +27,15 @@ class BookListView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def checkOut(request, book_id):
     book = Books.objects.filter(id=book_id).first()
     if book:
-        book.aval_quantity = book.total_quantity - 1
-        serializer = BookSerializer(book)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+        if book.aval_quantity > 0:
+            book.aval_quantity -= 1
+            book.save()
+            return Response({"message": "Book checked out successfully"}, status=status.HTTP_200_OK)
         else:
-            Response(serializer.errors, status=400)
+            return Response({"message": "Book copy isn't available for checkout"}, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response({"message": "Book not found"}, status=status.HTTP_404_NOT_FOUND)

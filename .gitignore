@@ -5,3 +5,4 @@ bookApi/test.rest
 Dockerfile
 .env
 .dockerignore
+migrations/
